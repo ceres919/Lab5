@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Shapes;
+﻿using Avalonia;
+using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
@@ -12,31 +13,41 @@ namespace GraphicsEditor.Models.Shapes
     {
         public string Points { get; set; }
         public string FillColor { get; set; }
-        public PolygonShape(string name, string strokeColor, int strokeThickness) : base(name, strokeColor, strokeThickness)
-        {
-
-        }
+        
         public override PolygonShape AddToList(ShapeCreator cr)
         {
             Name = cr.shapeName;
+            Points = cr.shapePoints;
             StrokeColor = cr.shapeStrokeColor;
             StrokeThickness = cr.shapeStrokeThickness;
+            FillColor = cr.shapeFillColor;
             return this;
         }
         public override Shape AddThisShape(ShapeCreator cr)
         {
-            //var stpoint = cr.shapeStartPoint.Split(',');
-            //var endpoint = cr.shapeEndPoint.Split(",");
-            //startPoint[0] = int.Parse(stpoint[0]);
-            //startPoint[1] = int.Parse(stpoint[1]);
+            Points points = PointsParse(cr.shapePoints);
 
-            return new Line
+            return new Polygon
             {
                 Name = cr.shapeName,
-                //StartPoint = new Point(startPoint[0], startPoint[1]),
+                Points = points,
                 Stroke = new SolidColorBrush(Color.Parse(cr.shapeStrokeColor)),
                 StrokeThickness = cr.shapeStrokeThickness,
+                Fill = new SolidColorBrush(Color.Parse(cr.shapeFillColor))
             };
+        }
+        public Points PointsParse(string str)
+        {
+            Points points = new Points();
+            var str_points = str.Split(" ");
+            foreach (var point in str_points)
+            {
+                var str_point = point.Split(",");
+                var p1 = int.Parse(str_point[0]);
+                var p2 = int.Parse(str_point[1]);
+                points.Add(new Point(p1, p2));
+            }
+            return points;
         }
     }
 }

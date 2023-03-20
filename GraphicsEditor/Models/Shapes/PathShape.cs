@@ -13,30 +13,25 @@ namespace GraphicsEditor.Models.Shapes
         public string FillColor { get; set; }
         public string CommandPath { get; set; }
 
-        public PathShape(string name, string strokeColor, int strokeThickness) : base(name, strokeColor, strokeThickness)
-        {
-
-        }
         public override PathShape AddToList(ShapeCreator cr)
         {
             Name = cr.shapeName;
+            CommandPath = cr.shapeCommandPath;
             StrokeColor = cr.shapeStrokeColor;
             StrokeThickness = cr.shapeStrokeThickness;
+            FillColor = cr.shapeFillColor;
             return this;
         }
         public override Shape AddThisShape(ShapeCreator cr)
         {
-            //var stpoint = cr.shapeStartPoint.Split(',');
-            //var endpoint = cr.shapeEndPoint.Split(",");
-            //startPoint[0] = int.Parse(stpoint[0]);
-            //startPoint[1] = int.Parse(stpoint[1]);
-
-            return new Line
+            Geometry gem = Geometry.Parse(cr.shapeCommandPath);
+            return new Path
             {
                 Name = cr.shapeName,
-                //StartPoint = new Point(startPoint[0], startPoint[1]),
+                Data = gem,
                 Stroke = new SolidColorBrush(Color.Parse(cr.shapeStrokeColor)),
                 StrokeThickness = cr.shapeStrokeThickness,
+                Fill = new SolidColorBrush(Color.Parse(cr.shapeFillColor))
             };
         }
     }

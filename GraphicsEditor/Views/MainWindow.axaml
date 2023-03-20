@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		Width="1000" Height="500"
+		Name="mainWindow"
         x:Class="GraphicsEditor.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="GraphicsEditor">
@@ -23,8 +24,8 @@
 			<Setter Property="Background" Value="MintCream"/>
 		</Style>
 		<Style Selector="Image.h1">
-			<Setter Property="Width" Value="25"/>
-			<Setter Property="Height" Value="25"/>
+			<Setter Property="Width" Value="28"/>
+			<Setter Property="Height" Value="28"/>
 			<Setter Property="HorizontalAlignment" Value="Center"/>
 			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
@@ -73,8 +74,8 @@
 				<DataTemplate>
 					<Grid ColumnDefinitions="*,*">
 						<TextBlock Grid.Column="0" Text="{Binding Name}"/>
-						<Button Name="buttonDeleteShape" Classes="b2" Grid.Column="1" Background="PaleTurquoise" CornerRadius="10"
-								Command="{Binding Delete}" CommandParameter="{Binding SelectedEntity}">
+						<Button Name="buttonDeleteShape" Classes="b2" Grid.Column="1" Background="PaleTurquoise" 
+								Command="{Binding #mainWindow.DataContext.DeleteButton}" CommandParameter="{Binding }">
 							<Image Classes="h1" Source="/Assets/delete.png"/>
 						</Button>
 					</Grid>
@@ -83,18 +84,4 @@
 		</ListBox>
 	</Grid>
 	</DockPanel>
-	
-	<!--<Grid ColumnDefinitions="0.5*,*,0.5*">
-
-
-		<Border Grid.Column="0" BorderBrush="Black" BorderThickness="2">
-			<Grid RowDefinitions="*,*,*">
-				
-			</Grid>
-		</Border>
-		<Canvas Grid.Column="1" Width="500"/>
-		<ListBox Grid.Column="2" Background="MintCream" BorderBrush="CadetBlue" BorderThickness="2">
-
-		</ListBox>
-	</Grid>-->
 </Window>

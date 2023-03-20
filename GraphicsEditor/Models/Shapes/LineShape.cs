@@ -13,16 +13,9 @@ namespace GraphicsEditor.Models.Shapes
     public class LineShape : ShapeEntity
     {
         private int[] startPoint = { 0, 0 };
+
         public int[] endPoint = { 0, 0 };
 
-        public LineShape(string name, string strokeColor, int strokeThickness) : base(name, strokeColor, strokeThickness)
-        {
-
-        }
-        public LineShape()
-        {
-
-        }
         public override LineShape AddToList(ShapeCreator cr)
         {
             Name = cr.shapeName;

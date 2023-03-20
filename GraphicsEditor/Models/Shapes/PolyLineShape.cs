@@ -1,8 +1,10 @@
-﻿using Avalonia.Controls.Shapes;
+﻿using Avalonia;
+using Avalonia.Controls.Shapes;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,35 +13,39 @@ namespace GraphicsEditor.Models.Shapes
     public class PolyLineShape : ShapeEntity
     {
         public string Points { get; set; }
-        public PolyLineShape(string name, string strokeColor, int strokeThickness) : base(name, strokeColor, strokeThickness)
-        {
-
-        }
-        public PolyLineShape()
-        {
-
-        }
+        
         public override PolyLineShape AddToList(ShapeCreator cr)
         {
             Name = cr.shapeName;
+            Points = cr.shapePoints;
             StrokeColor = cr.shapeStrokeColor;
             StrokeThickness = cr.shapeStrokeThickness;
             return this;
         }
         public override Shape AddThisShape(ShapeCreator cr)
         {
-            //var stpoint = cr.shapeStartPoint.Split(',');
-            //var endpoint = cr.shapeEndPoint.Split(",");
-            //startPoint[0] = int.Parse(stpoint[0]);
-            //startPoint[1] = int.Parse(stpoint[1]);
+            Points points = PointsParse(cr.shapePoints);
 
-            return new Line
+            return new Polyline
             {
                 Name = cr.shapeName,
-                //StartPoint = new Point(startPoint[0], startPoint[1]),
+                Points = points,
                 Stroke = new SolidColorBrush(Color.Parse(cr.shapeStrokeColor)),
-                StrokeThickness = cr.shapeStrokeThickness,
+                StrokeThickness = cr.shapeStrokeThickness
             };
+        }
+        public Points PointsParse(string str)
+        {
+            Points points = new Points();
+            var str_points = str.Split(" ");
+            foreach (var point in str_points)
+            {
+                var str_point = point.Split(",");
+                var p1 = int.Parse(str_point[0]);
+                var p2 = int.Parse(str_point[1]);
+                points.Add(new Point(p1, p2));
+            }
+            return points;
         }
     }
 }

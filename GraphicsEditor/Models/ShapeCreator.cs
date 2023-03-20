@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Shapes;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using GraphicsEditor.Models.Shapes;
 using GraphicsEditor.ViewModels;
 using System;
@@ -15,15 +16,18 @@ namespace GraphicsEditor.Models
         public readonly ObservableCollection<ShapeEntity> shapes = new()
         {
             new LineShape(),
-            new PolyLineShape()
-
+            new PolyLineShape(),
+            new PolygonShape(),
+            new RectangleShape(),
+            new EllipseShape(),
+            new PathShape()
         };
         public string shapeName;
         public string? shapeStartPoint;
         public string? shapeEndPoint;
         public string? shapePoints;
-        public int? shapeWidth;
-        public int? shapeHeight;
+        public int shapeWidth;
+        public int shapeHeight;
         public string shapeStrokeColor;
         public string? shapeFillColor;
         public int shapeStrokeThickness;
@@ -42,13 +46,12 @@ namespace GraphicsEditor.Models
             shapeStrokeThickness = main.ShapeStrokeThickness;
             shapeCommandPath = main.ShapeCommandPath;
         }
-        public Shape Create(int index, ShapesCollection list) 
+        public Shape Create(int index, ShapesCollection list, Canvas canvas) 
         {
             Shape newShape = shapes.ElementAt(index).AddThisShape(this);
             ShapeEntity newItem = shapes.ElementAt(index).AddToList(this);
-            list.AddItem(newItem);
+            list.AddItem(newItem, newShape, canvas);
             return newShape;
         }
-        //public ShapeCreator() { }
     }
 }

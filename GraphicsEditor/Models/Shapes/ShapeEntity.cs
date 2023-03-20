@@ -13,12 +13,12 @@ namespace GraphicsEditor.Models.Shapes
         public string StrokeColor { get; set; }
         public int StrokeThickness { get; set; }
 
-        public ShapeEntity(string name, string strokeColor, int strokeThickness) 
-        {
-            Name = name;
-            StrokeColor = strokeColor;
-            StrokeThickness = strokeThickness;
-        }
+        //public ShapeEntity(string name, string strokeColor, int strokeThickness) 
+        //{
+        //    Name = name;
+        //    StrokeColor = strokeColor;
+        //    StrokeThickness = strokeThickness;
+        //}
         public ShapeEntity() { }
         public abstract Shape AddThisShape(ShapeCreator creator);
         public abstract ShapeEntity AddToList(ShapeCreator cr);

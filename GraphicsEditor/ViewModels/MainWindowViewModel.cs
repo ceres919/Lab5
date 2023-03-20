@@ -41,25 +41,11 @@ namespace GraphicsEditor.ViewModels
 
             AddButton = ReactiveCommand.Create(() => {
                 ShapeCreator creator = new ShapeCreator(this);
-                Shape newShape = creator.Create(SelectedShapeIndex, list);
+                Shape newShape = creator.Create(SelectedShapeIndex, list, canv);
                 canv.Children.Add(newShape);
             });
             ClearButton = ReactiveCommand.Create(() => { Clear(); });
-            //Rectangle rec = new Rectangle();
-            //rec.Height = 80;
-            //rec.Width = 200;
-            //rec.Fill = Avalonia.Media.Brushes.LightSteelBlue;
-            //Canvas.SetLeft(rec,150);
-            //Canvas.SetTop(rec, 300);
-            //Line myLine = new Line();
-            //myLine.Stroke = Avalonia.Media.Brushes.LightSteelBlue;
-            //myLine.StartPoint = new Point(20,30);
-            //myLine.EndPoint = new Point(70, 100);
-            //myLine.HorizontalAlignment = HorizontalAlignment.Left;
-            //myLine.VerticalAlignment = VerticalAlignment.Center;
-            //myLine.StrokeThickness = 2;
-            //canv.Children.Add(rec);
-
+            DeleteButton = ReactiveCommand.Create<ShapeEntity>(DeleteShape);
         }
 
         public void Clear()
@@ -71,6 +57,12 @@ namespace GraphicsEditor.ViewModels
             ShapeWidth = 0;
             ShapeHeight = 0;
             ShapeCommandPath = null;
+            shapeStrokeThickness = 1;
+        }
+        public void DeleteShape(ShapeEntity item)
+        {
+            list.DeleteItem(item, canv);
+
         }
 
         public ShapeEntity SelectedEntity { get; set; }
@@ -95,12 +87,6 @@ namespace GraphicsEditor.ViewModels
                 ShapeContent = shapesPagesCollection.ElementAt(SelectedShapeIndex);
             } 
         }
-
-        //public ObservableCollection<ShapeEntity> ShapesCollection 
-        //{ 
-        //    get { return shapesCollection; }
-        //    set => this.RaiseAndSetIfChanged(ref shapesCollection, value);
-        //}
         public UserControl ShapeContent
         {
             get => shapeContent;
@@ -109,18 +95,9 @@ namespace GraphicsEditor.ViewModels
                 this.RaiseAndSetIfChanged(ref shapeContent, value);
             }
         }
-        //public string? ShapeName { get => creator.shapeName; set { this.RaiseAndSetIfChanged(ref creator.shapeName, value); } }
-        //public string? ShapeStartPoint { get => creator.shapeStartPoint; set { this.RaiseAndSetIfChanged(ref creator.shapeStartPoint, value); } }
-        //public string? ShapeEndPoint { get => creator.shapeEndPoint; set { this.RaiseAndSetIfChanged(ref creator.shapeEndPoint, value); } }
-        //public string? ShapePoints { get => creator.shapePoints; set { this.RaiseAndSetIfChanged(ref creator.shapePoints, value); } }
-        //public int ShapeWidth { get => creator.shapeWidth; set { this.RaiseAndSetIfChanged(ref creator.shapeWidth, value); } }
-        //public int ShapeHeight { get => creator.shapeHeight; set { this.RaiseAndSetIfChanged(ref creator.shapeHeight, value); } }
-        //public string ShapeStrokeColor { get => creator.shapeStrokeColor; set { this.RaiseAndSetIfChanged(ref creator.shapeStrokeColor, value); } }
-        //public string ShapeFillColor { get => creator.shapeFillColor; set { this.RaiseAndSetIfChanged(ref creator.shapeFillColor, value); } }
-        //public int ShapeStrokeThickness { get => creator.shapeStrokeThickness; set { this.RaiseAndSetIfChanged(ref creator.shapeStrokeThickness, value); } }
-        //public string? ShapeCommandPath { get => creator.shapeCommandPath; set { this.RaiseAndSetIfChanged(ref creator.shapeCommandPath, value); } }
+        
         public string shapeName, shapeStartPoint, shapeEndPoint, shapePoints, shapeStrokeColor, shapeFillColor, shapeCommandPath;
-        public int shapeHeight, shapeWidth, shapeStrokeThickness;
+        public int shapeHeight, shapeWidth, shapeStrokeThickness = 1;
         public string? ShapeName { get => shapeName; set=>this.RaiseAndSetIfChanged(ref shapeName, value); }
         public string? ShapeStartPoint { get => shapeStartPoint; set => this.RaiseAndSetIfChanged(ref shapeStartPoint, value); }
         public string? ShapeEndPoint { get => shapeEndPoint; set => this.RaiseAndSetIfChanged(ref shapeEndPoint, value); }
@@ -133,6 +110,7 @@ namespace GraphicsEditor.ViewModels
         public string? ShapeCommandPath { get => shapeCommandPath; set => this.RaiseAndSetIfChanged(ref shapeCommandPath, value); }
         public ReactiveCommand<Unit, Unit> AddButton { get; }
         public ReactiveCommand<Unit, Unit> ClearButton { get; }
+        public ReactiveCommand<ShapeEntity, Unit> DeleteButton { get; }
 
 
 
