@@ -19,9 +19,14 @@ namespace GraphicsEditor.Models
         public ObservableCollection<ShapeEntity> shapeList = new ObservableCollection<ShapeEntity>();
         public ObservableCollection<Shape> shapesCollection = new ObservableCollection<Shape>();
 
+        public ShapesCollection() 
+        {
+            shapeList = new ObservableCollection<ShapeEntity>();
+            shapesCollection = new ObservableCollection<Shape>();
+        }
 
         public void AddItem(ShapeEntity item, Shape shape, Canvas canvas)
-        {
+         {
             foreach (ShapeEntity itemEntity in shapeList)
             {
                 if (itemEntity.Name == item.Name)
@@ -36,6 +41,7 @@ namespace GraphicsEditor.Models
             }
             shapeList.Add(item);
             shapesCollection.Add(shape);
+            canvas.Children.Add(shape);
         }
         public void DeleteItem(ShapeEntity item, Canvas canvas)
         {

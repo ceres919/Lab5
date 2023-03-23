@@ -5,32 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GraphicsEditor.Models.Shapes
 {
     public class EllipseShape : ShapeEntity
     {
-        private int[] startPoint = { 0, 0 };
+        public string StartPoint { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string FillColor { get; set; }
-        public override EllipseShape AddToList(ShapeCreator cr)
+        public EllipseShape() { }
+        public EllipseShape(ShapeCreator cr) : base(cr.shapeName, cr.shapeStrokeColor, cr.shapeStrokeThickness) 
         {
-            Name = cr.shapeName;
-            PointsParse(cr.shapeStartPoint, startPoint);
+            StartPoint = cr.shapeStartPoint;
             Width = cr.shapeWidth;
             Height = cr.shapeHeight;
-            StrokeColor = cr.shapeStrokeColor;
-            StrokeThickness = cr.shapeStrokeThickness;
             FillColor = cr.shapeFillColor;
-            return this;
         }
-        public override Shape AddThisShape(ShapeCreator cr)
+
+        public override EllipseShape AddToList(ShapeCreator cr)
         {
-            var stpoint = cr.shapeStartPoint.Split(',');
-            startPoint[0] = int.Parse(stpoint[0]);
-            startPoint[1] = int.Parse(stpoint[1]);
+            return new EllipseShape(cr);
+        }
+        public override Shape? AddThisShape(ShapeCreator cr)
+        {
+            if (cr.shapeStartPoint == null || cr.shapeWidth == 0 || cr.shapeHeight == 0) return null;
+            var startPoint = PointsParse(cr.shapeStartPoint);
+            if (startPoint == null) return null;
 
             return new Ellipse
             {
@@ -43,12 +46,35 @@ namespace GraphicsEditor.Models.Shapes
                 Fill = new SolidColorBrush(Color.Parse(cr.shapeFillColor))
             };
         }
-        public void PointsParse(string str, int[] point)
+        public override Shape AddThisShape()
         {
-            var str_point = str.Split(",");
-            point[0] = int.Parse(str_point[0]);
-            point[1] = int.Parse(str_point[1]);
-
+            var startPoint = PointsParse(this.StartPoint);
+            
+            return new Ellipse
+            {
+                Name = this.Name,
+                Margin = new(startPoint[0], startPoint[1], 0, 0),
+                Height = this.Height,
+                Width = this.Width,
+                Stroke = new SolidColorBrush(Color.Parse(this.StrokeColor)),
+                StrokeThickness = this.StrokeThickness,
+                Fill = new SolidColorBrush(Color.Parse(this.FillColor))
+            };
+        }
+        public int[] PointsParse(string str)
+        {
+            int[] point = { 0, 0 };
+            try
+            {
+                var str_point = str.Split(",");
+                point[0] = int.Parse(str_point[0]);
+                point[1] = int.Parse(str_point[1]);
+            }
+            catch
+            {
+                return null;
+            }
+            return point;
         }
     }
 }

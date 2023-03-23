@@ -46,12 +46,18 @@ namespace GraphicsEditor.Models
             shapeStrokeThickness = main.ShapeStrokeThickness;
             shapeCommandPath = main.ShapeCommandPath;
         }
-        public Shape Create(int index, ShapesCollection list, Canvas canvas) 
+        public void Create(int index, ShapesCollection list, Canvas canvas) 
         {
-            Shape newShape = shapes.ElementAt(index).AddThisShape(this);
+            if (shapeName == null) return;
+            Shape? newShape = shapes.ElementAt(index).AddThisShape(this);
+            if (newShape == null) return;
             ShapeEntity newItem = shapes.ElementAt(index).AddToList(this);
             list.AddItem(newItem, newShape, canvas);
-            return newShape;
+        }
+        public void Load(ShapeEntity listItem, ShapesCollection list, Canvas canvas)
+        {
+            Shape newShape = listItem.AddThisShape();
+            list.AddItem(listItem, newShape, canvas);
         }
     }
 }

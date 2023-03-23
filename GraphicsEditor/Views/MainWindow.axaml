@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		MinWidth="1000" MinHeight="500"
 		Width="1000" Height="500"
 		Name="mainWindow"
         x:Class="GraphicsEditor.Views.MainWindow"
@@ -16,6 +17,8 @@
 			<Setter Property="HorizontalContentAlignment" Value="Center"/>
 			<Setter Property="VerticalAlignment" Value="Bottom"/>
 			<Setter Property="Background" Value="MintCream"/>
+			<Setter Property="BorderBrush" Value="CadetBlue"/>
+			
 		</Style>
 		<Style Selector="Button.b2">
 			<Setter Property="HorizontalAlignment" Value="Right"/>
@@ -36,20 +39,20 @@
 			<Setter Property="Margin" Value="10,0,0,0"/>
 		</Style>
 	</Window.Styles>
-	<DockPanel >
+	<DockPanel>
 		<Menu DockPanel.Dock="Top" BorderBrush="Gray" BorderThickness="1">
 			<MenuItem Name="menuExport" Header="Экспортировать">
-				<MenuItem Header="Экспортировать в PNG"/>
-				<MenuItem Header="Экспортировать в JSON"/>
-				<MenuItem Header="Экспортировать в XML"/>
+				<MenuItem Header="Экспортировать в PNG" Command="{Binding ExportButton}" CommandParameter="png"/>
+				<MenuItem Header="Экспортировать в JSON" Command="{Binding ExportButton}" CommandParameter="json"/>
+				<MenuItem Header="Экспортировать в XML" Command="{Binding ExportButton}" CommandParameter="xml"/>
 			</MenuItem>
 			<MenuItem Name="menuImport" Header="Импортировать">
-				<MenuItem Header="Импортировать в PNG"/>
-				<MenuItem Header="Импортировать в JSON"/>
-				<MenuItem Header="Импортировать в XML"/>
+				<!--<MenuItem Header="Импортировать в PNG" Command="{Binding ImportButton}" CommandParameter="png"/>-->
+				<MenuItem Header="Импортировать в JSON" Command="{Binding ImportButton}" CommandParameter="json"/>
+				<MenuItem Header="Импортировать в XML" Command="{Binding ImportButton}" CommandParameter="xml"/>
 			</MenuItem>
 		</Menu>
-		<Grid ColumnDefinitions="0.5*,*,0.5*">
+		<Grid ColumnDefinitions="0.7*,*,0.7*">
 			<Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
 				<Grid RowDefinitions="auto,auto,*" ColumnDefinitions="*,*">
 					<ComboBox Grid.Row="0" Grid.ColumnSpan="2" SelectedIndex="{Binding SelectedShapeIndex}" HorizontalAlignment="Stretch" Name="comboBoxShape" >
@@ -67,21 +70,21 @@
 							Command="{Binding ClearButton}"/>
 				</Grid>
 			</Border>
-		<Canvas Name="canvas" Grid.Column="1" Width="500"/>
-		<ListBox Name="listBoxShapes" Grid.Column="2" Background="MintCream" BorderBrush="CadetBlue" BorderThickness="1"
-				Items="{Binding ShapeList}" SelectedItem="{Binding SelectedEntity}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<Grid ColumnDefinitions="*,*">
-						<TextBlock Grid.Column="0" Text="{Binding Name}"/>
-						<Button Name="buttonDeleteShape" Classes="b2" Grid.Column="1" Background="PaleTurquoise" 
-								Command="{Binding #mainWindow.DataContext.DeleteButton}" CommandParameter="{Binding }">
-							<Image Classes="h1" Source="/Assets/delete.png"/>
-						</Button>
-					</Grid>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-	</Grid>
+			<Canvas Name="canvas" Grid.Column="1" Background="AliceBlue" MinWidth="400" MinHeight="420"/>
+			<ListBox Name="listBoxShapes" Grid.Column="2" Background="MintCream" BorderBrush="CadetBlue" BorderThickness="1"
+					Items="{Binding ShapeList}" SelectedItem="{Binding SelectedEntity}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="*,*">
+							<TextBlock Grid.Column="0" Text="{Binding Name}"/>
+							<Button Name="buttonDeleteShape" Classes="b2" Grid.Column="1" Background="PaleTurquoise" 
+									Command="{Binding #mainWindow.DataContext.DeleteButton}" CommandParameter="{Binding }">
+								<Image Classes="h1" Source="/Assets/delete.png"/>
+							</Button>
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
 	</DockPanel>
 </Window>

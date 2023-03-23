@@ -3,7 +3,9 @@ using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GraphicsEditor.Models.Shapes
@@ -12,19 +14,31 @@ namespace GraphicsEditor.Models.Shapes
     {
         public string FillColor { get; set; }
         public string CommandPath { get; set; }
+        public PathShape() { }
+        public PathShape(ShapeCreator cr) : base(cr.shapeName, cr.shapeStrokeColor, cr.shapeStrokeThickness)
+        {
+            FillColor = cr.shapeFillColor;
+            CommandPath = cr.shapeCommandPath;
+        }
 
         public override PathShape AddToList(ShapeCreator cr)
         {
-            Name = cr.shapeName;
-            CommandPath = cr.shapeCommandPath;
-            StrokeColor = cr.shapeStrokeColor;
-            StrokeThickness = cr.shapeStrokeThickness;
-            FillColor = cr.shapeFillColor;
-            return this;
+            return new PathShape(cr);
         }
-        public override Shape AddThisShape(ShapeCreator cr)
+        public override Shape? AddThisShape(ShapeCreator cr)
         {
-            Geometry gem = Geometry.Parse(cr.shapeCommandPath);
+            if (cr.shapeCommandPath == null) return null;
+            Geometry gem;
+            try
+            {
+                gem = Geometry.Parse(cr.shapeCommandPath);
+            }
+            catch
+            {
+                return null;
+            }
+            if (gem == null) return null;
+
             return new Path
             {
                 Name = cr.shapeName,
@@ -32,6 +46,19 @@ namespace GraphicsEditor.Models.Shapes
                 Stroke = new SolidColorBrush(Color.Parse(cr.shapeStrokeColor)),
                 StrokeThickness = cr.shapeStrokeThickness,
                 Fill = new SolidColorBrush(Color.Parse(cr.shapeFillColor))
+            };
+        }
+        public override Shape AddThisShape()
+        {
+            Geometry gem = Geometry.Parse(this.CommandPath);
+
+            return new Path
+            {
+                Name = this.Name,
+                Data = gem,
+                Stroke = new SolidColorBrush(Color.Parse(this.StrokeColor)),
+                StrokeThickness = this.StrokeThickness,
+                Fill = new SolidColorBrush(Color.Parse(this.FillColor))
             };
         }
     }
