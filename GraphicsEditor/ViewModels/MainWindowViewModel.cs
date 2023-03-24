@@ -131,6 +131,7 @@ namespace GraphicsEditor.ViewModels
             ShapeCreator creator = new ShapeCreator();
             var index = creator.ListIndexOfCurrentShape(item);
             ShapeContent = shapesPagesCollection.ElementAt(index);
+            SelectedShapeIndex = index;
             item.SetPropertiesOfCurrentShape(this);
         }
 
@@ -140,7 +141,10 @@ namespace GraphicsEditor.ViewModels
             set 
             {
                 this.RaiseAndSetIfChanged(ref selectedEntity, value);
-                CurrentShapeContent(selectedEntity);
+                if (selectedEntity != null)
+                {
+                    CurrentShapeContent(selectedEntity);
+                }
             }
         }
         public string OpenFileName { get; set; }
