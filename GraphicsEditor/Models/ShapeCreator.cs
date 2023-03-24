@@ -33,6 +33,7 @@ namespace GraphicsEditor.Models
         public int shapeStrokeThickness;
         public string? shapeCommandPath;
         
+        public ShapeCreator() { }
         public ShapeCreator(MainWindowViewModel main) 
         {
             shapeName = main.ShapeName;
@@ -58,6 +59,13 @@ namespace GraphicsEditor.Models
         {
             Shape newShape = listItem.AddThisShape();
             list.AddItem(listItem, newShape, canvas);
+        }
+        public int ListIndexOfCurrentShape(ShapeEntity item)
+        {
+            var curType = item.GetType();
+            var typedItem = shapes.First(p=> p.GetType() == curType);
+            var index = shapes.IndexOf(typedItem);
+            return index;
         }
     }
 }

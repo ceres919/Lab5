@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using GraphicsEditor.ViewModels;
 
 namespace GraphicsEditor.Models.Shapes
 {
@@ -32,5 +33,6 @@ namespace GraphicsEditor.Models.Shapes
         public abstract Shape? AddThisShape(ShapeCreator creator);
         public abstract Shape AddThisShape();
         public abstract ShapeEntity AddToList(ShapeCreator cr);
+        public abstract void SetPropertiesOfCurrentShape(MainWindowViewModel main);
     }
 }

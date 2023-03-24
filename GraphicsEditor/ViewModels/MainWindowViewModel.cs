@@ -13,6 +13,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reactive;
@@ -125,13 +126,21 @@ namespace GraphicsEditor.ViewModels
             ShapeCommandPath = null;
             shapeStrokeThickness = 1;
         }
+        public void CurrentShapeContent(ShapeEntity item)
+        {
+            ShapeCreator creator = new ShapeCreator();
+            var index = creator.ListIndexOfCurrentShape(item);
+            ShapeContent = shapesPagesCollection.ElementAt(index);
+            item.SetPropertiesOfCurrentShape(this);
+        }
 
         public ShapeEntity SelectedEntity 
         { 
             get =>selectedEntity;
             set 
             {
-                this.RaiseAndSetIfChanged(ref selectedEntity, value); 
+                this.RaiseAndSetIfChanged(ref selectedEntity, value);
+                CurrentShapeContent(selectedEntity);
             }
         }
         public string OpenFileName { get; set; }

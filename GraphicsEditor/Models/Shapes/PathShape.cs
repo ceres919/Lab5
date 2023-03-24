@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls.Shapes;
 using Avalonia.Media;
+using GraphicsEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,14 @@ namespace GraphicsEditor.Models.Shapes
                 StrokeThickness = this.StrokeThickness,
                 Fill = new SolidColorBrush(Color.Parse(this.FillColor))
             };
+        }
+        public override void SetPropertiesOfCurrentShape(MainWindowViewModel main)
+        {
+            main.ShapeName = this.Name;
+            main.ShapeCommandPath = this.CommandPath;
+            main.ShapeStrokeColor = this.StrokeColor;
+            main.ShapeStrokeThickness = this.StrokeThickness;
+            main.ShapeFillColor = this.FillColor;
         }
     }
 }
