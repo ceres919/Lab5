@@ -174,16 +174,16 @@ namespace GraphicsEditor.ViewModels
         }
 
         public string shapeName, shapeStartPoint, shapeEndPoint, shapePoints, shapeCommandPath, shapeStrokeColor = colors.ElementAt(0), shapeFillColor = colors.ElementAt(0);
-        public int shapeHeight, shapeWidth, shapeStrokeThickness = 1;
+        public double shapeHeight, shapeWidth, shapeStrokeThickness = 1;
         public string ShapeName { get => shapeName; set=>this.RaiseAndSetIfChanged(ref shapeName, value); }
         public string? ShapeStartPoint { get => shapeStartPoint; set => this.RaiseAndSetIfChanged(ref shapeStartPoint, value); }
         public string? ShapeEndPoint { get => shapeEndPoint; set => this.RaiseAndSetIfChanged(ref shapeEndPoint, value); }
         public string? ShapePoints { get => shapePoints; set => this.RaiseAndSetIfChanged(ref shapePoints, value); }
-        public int ShapeWidth { get => shapeWidth; set => this.RaiseAndSetIfChanged(ref shapeWidth, value); }
-        public int ShapeHeight { get => shapeHeight; set => this.RaiseAndSetIfChanged(ref shapeHeight, value); }
+        public double ShapeWidth { get => shapeWidth; set => this.RaiseAndSetIfChanged(ref shapeWidth, value); }
+        public double ShapeHeight { get => shapeHeight; set => this.RaiseAndSetIfChanged(ref shapeHeight, value); }
         public string ShapeStrokeColor { get => shapeStrokeColor; set => this.RaiseAndSetIfChanged(ref shapeStrokeColor, value); }
         public string ShapeFillColor { get => shapeFillColor; set => this.RaiseAndSetIfChanged(ref shapeFillColor, value); }
-        public int ShapeStrokeThickness { get => shapeStrokeThickness; set => this.RaiseAndSetIfChanged(ref shapeStrokeThickness, value); }
+        public double ShapeStrokeThickness { get => shapeStrokeThickness; set => this.RaiseAndSetIfChanged(ref shapeStrokeThickness, value); }
         public string? ShapeCommandPath { get => shapeCommandPath; set => this.RaiseAndSetIfChanged(ref shapeCommandPath, value); }
         public ReactiveCommand<string, Unit> ImportButton { get; }
         public ReactiveCommand<string, Unit> ExportButton { get; }

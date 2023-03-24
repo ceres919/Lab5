@@ -60,8 +60,8 @@ namespace GraphicsEditor.Models.Shapes
                 foreach (var point in str_points)
                 {
                     var str_point = point.Split(",");
-                    var p1 = int.Parse(str_point[0]);
-                    var p2 = int.Parse(str_point[1]);
+                    var p1 = double.Parse(str_point[0]);
+                    var p2 = double.Parse(str_point[1]);
                     points.Add(new Point(p1, p2));
                 }
             }

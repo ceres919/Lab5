@@ -61,14 +61,14 @@ namespace GraphicsEditor.Models.Shapes
                 StrokeThickness = this.StrokeThickness
             };
         }
-        public int[] PointsParse(string str)
+        public double[] PointsParse(string str)
         {
-            int[] point = { 0, 0 };
+            double[] point = { 0, 0 };
             try
             {
                 var str_point = str.Split(",");
-                point[0] = int.Parse(str_point[0]);
-                point[1] = int.Parse(str_point[1]);
+                point[0] = double.Parse(str_point[0]);
+                point[1] = double.Parse(str_point[1]);
 
             }
             catch

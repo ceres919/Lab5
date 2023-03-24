@@ -26,11 +26,11 @@ namespace GraphicsEditor.Models
         public string? shapeStartPoint;
         public string? shapeEndPoint;
         public string? shapePoints;
-        public int shapeWidth;
-        public int shapeHeight;
+        public double shapeWidth;
+        public double shapeHeight;
         public string shapeStrokeColor;
         public string? shapeFillColor;
-        public int shapeStrokeThickness;
+        public double shapeStrokeThickness;
         public string? shapeCommandPath;
         
         public ShapeCreator() { }

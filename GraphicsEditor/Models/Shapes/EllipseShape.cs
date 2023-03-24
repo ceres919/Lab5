@@ -14,8 +14,8 @@ namespace GraphicsEditor.Models.Shapes
     public class EllipseShape : ShapeEntity
     {
         public string StartPoint { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
         public string FillColor { get; set; }
         public EllipseShape() { }
         public EllipseShape(ShapeCreator cr) : base(cr.shapeName, cr.shapeStrokeColor, cr.shapeStrokeThickness) 
@@ -62,14 +62,14 @@ namespace GraphicsEditor.Models.Shapes
                 Fill = new SolidColorBrush(Color.Parse(this.FillColor))
             };
         }
-        public int[] PointsParse(string str)
+        public double[] PointsParse(string str)
         {
-            int[] point = { 0, 0 };
+            double[] point = { 0, 0 };
             try
             {
                 var str_point = str.Split(",");
-                point[0] = int.Parse(str_point[0]);
-                point[1] = int.Parse(str_point[1]);
+                point[0] = double.Parse(str_point[0]);
+                point[1] = double.Parse(str_point[1]);
             }
             catch
             {

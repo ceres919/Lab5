@@ -21,9 +21,9 @@ namespace GraphicsEditor.Models.Shapes
     {
         public string Name { get; set; }
         public string StrokeColor { get; set; }
-        public int StrokeThickness { get; set; }
+        public double StrokeThickness { get; set; }
         public ShapeEntity() { }
-        public ShapeEntity(string name, string strokeColor, int strokeThickness)
+        public ShapeEntity(string name, string strokeColor, double strokeThickness)
         {
             Name = name;
             StrokeColor = strokeColor;
